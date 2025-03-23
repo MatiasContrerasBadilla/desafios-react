@@ -1,9 +1,9 @@
 import Header from "./Header.jsx";
 import CardPizza from "./CardPizza.jsx";
-
+import {pizzas} from "./pizzas.js";
 const Home = () => {
   
-  const pizzas = [
+  /* const pizzas = [
     {
       nombre: "Pizza Napolitana",
       precio: 5950,
@@ -24,7 +24,7 @@ const Home = () => {
       img: "https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-1239077_640_com.jpg?alt=media&token=e7cde87a-08d5-4040-ac54-90f6c31eb3e3",
     }
   ]
-
+*/
   return (
     <div className="home">
       <Header />
@@ -33,9 +33,10 @@ const Home = () => {
         {pizzas.map((pizza, index) => (
           <CardPizza
             key={index}
-            nombre={pizza.nombre}
-            precio={pizza.precio}
-            ingredientes={pizza.ingredientes}
+            id = {pizza.id}
+            nombre={pizza.name}
+            precio={pizza.price}
+            ingredientes={pizza.ingredients}
             img={pizza.img}
           />
         ))}
