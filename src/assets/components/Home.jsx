@@ -1,7 +1,25 @@
+import {useState, useEffect} from "react"; 
 import Header from "./Header.jsx";
 import CardPizza from "./CardPizza.jsx";
-import {pizzas} from "./pizzas.js";
 const Home = () => {
+  const [pizzas, setPizzas] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPizzas = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/pizzas");
+        const data = await response.json();
+        setPizzas(data);
+      } catch (error) {
+        console.error("Error al obtener las pizzas", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPizzas();
+  }, []);
   
   /* const pizzas = [
     {
@@ -29,20 +47,25 @@ const Home = () => {
     <div className="home">
       <Header />
       <h1>Nuestras Pizzas</h1>
-      <div className="pizza-list">
-        {pizzas.map((pizza, index) => (
-          <CardPizza
-            key={index}
-            id = {pizza.id}
-            nombre={pizza.name}
-            precio={pizza.price}
-            ingredientes={pizza.ingredients}
-            img={pizza.img}
-          />
-        ))}
-      </div>
+      {loading ? (
+        <p>Cargando pizzas...</p>
+      ) : (
+        <div className="pizza-list">
+          {pizzas.map((pizza) => (
+            <CardPizza
+              key={pizza.id}
+              id={pizza.id}
+              nombre={pizza.name}
+              precio={pizza.price}
+              ingredientes={pizza.ingredients}
+              img={pizza.img}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
+
 
 export default Home;
