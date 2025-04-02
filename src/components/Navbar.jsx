@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
-  const total = 25000
+  const total = 25000;
   const token = false;
 
   const totalFormateado = total.toLocaleString("es-CL", {
@@ -7,13 +9,12 @@ const Navbar = () => {
     currency: "CLP",
   });
 
-
-   return (
+  return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/">
           Pizzería Mamma Mía!
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -22,50 +23,49 @@ const Navbar = () => {
           aria-controls="navbarTogglerDemo02"
           aria-expanded="false"
           aria-label="Toggle navigation"
-          >
+        >
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
+              <Link className="nav-link active" aria-current="page" to="/">
                 Home
-              </a>
+              </Link>
             </li>
           </ul>
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-  
             {token === false ? (
               <>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
+                  <Link className="nav-link" to="/login">
                     Login
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
+                  <Link className="nav-link" to="/register">
                     Register
-                  </a>
+                  </Link>
                 </li>
               </>
             ) : (
               <>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
+                  <Link className="nav-link" to="/profile">
                     Profile
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
+                  <Link className="nav-link" to="/logout">
                     Logout
-                  </a>
+                  </Link>
                 </li>
               </>
             )}
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link className="nav-link" to="/cart">
                 Total: {totalFormateado}
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -73,4 +73,5 @@ const Navbar = () => {
     </nav>
   );
 };
+
 export default Navbar;
