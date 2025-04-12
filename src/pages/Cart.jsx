@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { pizzaCart } from "../data/pizzaData"; 
+import { UserContext } from "../context/UserContext";
 
 const Cart = () => {
   const [cart, setCart] = useState(pizzaCart);
+  const { token } = useContext(UserContext);
+  
   const total = cart.reduce((acc, pizza) => acc + pizza.price * pizza.count, 0);
 
   const aumentarCantidad = (id) => {
@@ -43,7 +46,9 @@ const Cart = () => {
         ))}
         <div className="cart-total">
           <h3>Total: ${total.toLocaleString()}</h3>
-          <button className="btn btn-success">Pagar</button>
+          <button className="btn btn-success" disabled={!token}>
+            Pagar
+          </button>
         </div>
       </div>
     </div>

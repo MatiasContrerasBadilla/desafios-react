@@ -1,13 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 const Navbar = () => {
+  const { token, logout } = useContext(UserContext);
+  const navigate = useNavigate();
+  
   const total = 25000;
-  const token = false;
-
   const totalFormateado = total.toLocaleString("es-CL", {
     style: "currency",
     currency: "CLP",
   });
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -35,7 +43,7 @@ const Navbar = () => {
             </li>
           </ul>
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-            {token === false ? (
+            {!token ? (
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/login">
@@ -56,9 +64,14 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/logout">
+                  {}
+                  <button
+                    onClick={handleLogout}
+                    className="nav-link btn btn-link"
+                    style={{ textDecoration: "none" }}
+                  >
                     Logout
-                  </Link>
+                  </button>
                 </li>
               </>
             )}
