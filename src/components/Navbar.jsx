@@ -1,12 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import { useCartContext } from "../context/CartContext";
 
 const Navbar = () => {
   const { token, logout } = useContext(UserContext);
+  const { total } = useCartContext();
   const navigate = useNavigate();
-  
-  const total = 25000;
+
   const totalFormateado = total.toLocaleString("es-CL", {
     style: "currency",
     currency: "CLP",
@@ -64,7 +65,6 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  {}
                   <button
                     onClick={handleLogout}
                     className="nav-link btn btn-link"
