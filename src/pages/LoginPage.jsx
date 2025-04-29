@@ -1,34 +1,33 @@
+import { useUserContext } from "../context/UserContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+const Login = () => {
+  const { login } = useUserContext();
+  const [form, setForm] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      setMessage("Todos los campos son obligatorios");
-      return;
-    }
-    if (password.length < 6) {
-      setMessage("La contraseña debe tener al menos 6 caracteres");
-      return;
-    }
-    setMessage("Inicio de sesión exitoso");
+    await login(form);
+    navigate("/profile");
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button type="submit">Iniciar Sesión</button>
-      </form>
-      {message && <p>{message}</p>}
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        placeholder="Email"
+        onChange={(e) => setForm({ ...form, email: e.target.value })}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={(e) => setForm({ ...form, password: e.target.value })}
+      />
+      <button type="submit">Login</button>
+    </form>
   );
 };
 
-export default LoginPage;
+export default Login;

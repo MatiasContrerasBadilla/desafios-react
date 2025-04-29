@@ -1,7 +1,25 @@
 import { useCartContext } from "../context/CartContext";
+import { useUserContext } from "../context/UserContext";
+import { useState } from "react";
 
 const Cart = () => {
   const { cart, increaseQuantity, decreaseQuantity, removeFromCart, total } = useCartContext();
+  const { token } = useUserContext();
+  const [success, setSuccess] = useState(false);
+
+  const handleCheckout = async () => {
+    const res = await fetch("http://localhost:5000/api/checkouts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ cart }),
+    });
+    if (res.ok) {
+      setSuccess(true);
+    }
+  };
 
   return (
     <div className="container mt-5">
@@ -16,6 +34,8 @@ const Cart = () => {
         </div>
       ))}
       <h2>Total: ${total.toFixed(2)}</h2>
+      {token && <button onClick={handleCheckout}>Realizar compra</button>}
+      {success && <p>Compra realizada con éxito!</p>}
     </div>
   );
 };
